@@ -1,0 +1,372 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    height: 100vh;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.scene {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px;
+}
+
+.city {
+    width: 600px;
+    height: 600px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(60deg) rotateZ(-45deg);
+    animation: rotate 20s infinite linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotateX(60deg) rotateZ(-45deg);
+    }
+    to {
+        transform: rotateX(60deg) rotateZ(315deg);
+    }
+}
+
+.ground {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #2d4a2b 0%, #1a2e1a 100%);
+    transform: rotateX(90deg) translateZ(-10px);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+    border: 2px solid #3a5a38;
+}
+
+.building {
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.3s;
+}
+
+.building:hover {
+    transform: translateY(-10px);
+}
+
+.face {
+    position: absolute;
+    background: linear-gradient(135deg, #4a90e2 0%, #2c5f8d 100%);
+    border: 1px solid #1e3a5f;
+    opacity: 0.9;
+}
+
+/* Building 1 - Tall */
+.building-1 {
+    width: 80px;
+    height: 200px;
+    left: 100px;
+    top: 150px;
+}
+
+.building-1 .front {
+    width: 80px;
+    height: 200px;
+    transform: translateZ(40px);
+    background: linear-gradient(to bottom, #4a90e2 0%, #2c5f8d 100%);
+}
+
+.building-1 .back {
+    width: 80px;
+    height: 200px;
+    transform: translateZ(-40px) rotateY(180deg);
+    background: linear-gradient(to bottom, #3a7ac2 0%, #1c4f7d 100%);
+}
+
+.building-1 .left {
+    width: 80px;
+    height: 200px;
+    transform: rotateY(-90deg) translateZ(40px);
+    background: linear-gradient(to bottom, #3a7ac2 0%, #1c4f7d 100%);
+}
+
+.building-1 .right {
+    width: 80px;
+    height: 200px;
+    transform: rotateY(90deg) translateZ(40px);
+    background: linear-gradient(to bottom, #5aa0f2 0%, #3c6f9d 100%);
+}
+
+.building-1 .top {
+    width: 80px;
+    height: 80px;
+    transform: rotateX(90deg) translateZ(200px);
+    background: linear-gradient(135deg, #6ab0ff 0%, #4a90e2 100%);
+}
+
+/* Building 2 - Medium */
+.building-2 {
+    width: 100px;
+    height: 150px;
+    left: 220px;
+    top: 200px;
+}
+
+.building-2 .front {
+    width: 100px;
+    height: 150px;
+    transform: translateZ(50px);
+    background: linear-gradient(to bottom, #e74c3c 0%, #c0392b 100%);
+}
+
+.building-2 .back {
+    width: 100px;
+    height: 150px;
+    transform: translateZ(-50px) rotateY(180deg);
+    background: linear-gradient(to bottom, #d73c2c 0%, #b0291b 100%);
+}
+
+.building-2 .left {
+    width: 100px;
+    height: 150px;
+    transform: rotateY(-90deg) translateZ(50px);
+    background: linear-gradient(to bottom, #d73c2c 0%, #b0291b 100%);
+}
+
+.building-2 .right {
+    width: 100px;
+    height: 150px;
+    transform: rotateY(90deg) translateZ(50px);
+    background: linear-gradient(to bottom, #f75c4c 0%, #d0493b 100%);
+}
+
+.building-2 .top {
+    width: 100px;
+    height: 100px;
+    transform: rotateX(90deg) translateZ(150px);
+    background: linear-gradient(135deg, #ff6c5c 0%, #e74c3c 100%);
+}
+
+/* Building 3 - Short */
+.building-3 {
+    width: 90px;
+    height: 100px;
+    left: 350px;
+    top: 250px;
+}
+
+.building-3 .front {
+    width: 90px;
+    height: 100px;
+    transform: translateZ(45px);
+    background: linear-gradient(to bottom, #f39c12 0%, #e67e22 100%);
+}
+
+.building-3 .back {
+    width: 90px;
+    height: 100px;
+    transform: translateZ(-45px) rotateY(180deg);
+    background: linear-gradient(to bottom, #e38c02 0%, #d66e12 100%);
+}
+
+.building-3 .left {
+    width: 90px;
+    height: 100px;
+    transform: rotateY(-90deg) translateZ(45px);
+    background: linear-gradient(to bottom, #e38c02 0%, #d66e12 100%);
+}
+
+.building-3 .right {
+    width: 90px;
+    height: 100px;
+    transform: rotateY(90deg) translateZ(45px);
+    background: linear-gradient(to bottom, #ffac22 0%, #f68e32 100%);
+}
+
+.building-3 .top {
+    width: 90px;
+    height: 90px;
+    transform: rotateX(90deg) translateZ(100px);
+    background: linear-gradient(135deg, #ffbc32 0%, #f39c12 100%);
+}
+
+/* Building 4 - Very Tall */
+.building-4 {
+    width: 70px;
+    height: 250px;
+    left: 250px;
+    top: 100px;
+}
+
+.building-4 .front {
+    width: 70px;
+    height: 250px;
+    transform: translateZ(35px);
+    background: linear-gradient(to bottom, #9b59b6 0%, #8e44ad 100%);
+}
+
+.building-4 .back {
+    width: 70px;
+    height: 250px;
+    transform: translateZ(-35px) rotateY(180deg);
+    background: linear-gradient(to bottom, #8b49a6 0%, #7e349d 100%);
+}
+
+.building-4 .left {
+    width: 70px;
+    height: 250px;
+    transform: rotateY(-90deg) translateZ(35px);
+    background: linear-gradient(to bottom, #8b49a6 0%, #7e349d 100%);
+}
+
+.building-4 .right {
+    width: 70px;
+    height: 250px;
+    transform: rotateY(90deg) translateZ(35px);
+    background: linear-gradient(to bottom, #ab69c6 0%, #9e54bd 100%);
+}
+
+.building-4 .top {
+    width: 70px;
+    height: 70px;
+    transform: rotateX(90deg) translateZ(250px);
+    background: linear-gradient(135deg, #bb79d6 0%, #9b59b6 100%);
+}
+
+/* Building 5 - Medium-Tall */
+.building-5 {
+    width: 85px;
+    height: 180px;
+    left: 400px;
+    top: 150px;
+}
+
+.building-5 .front {
+    width: 85px;
+    height: 180px;
+    transform: translateZ(42.5px);
+    background: linear-gradient(to bottom, #1abc9c 0%, #16a085 100%);
+}
+
+.building-5 .back {
+    width: 85px;
+    height: 180px;
+    transform: translateZ(-42.5px) rotateY(180deg);
+    background: linear-gradient(to bottom, #0aac8c 0%, #069075 100%);
+}
+
+.building-5 .left {
+    width: 85px;
+    height: 180px;
+    transform: rotateY(-90deg) translateZ(42.5px);
+    background: linear-gradient(to bottom, #0aac8c 0%, #069075 100%);
+}
+
+.building-5 .right {
+    width: 85px;
+    height: 180px;
+    transform: rotateY(90deg) translateZ(42.5px);
+    background: linear-gradient(to bottom, #2accac 0%, #26b095 100%);
+}
+
+.building-5 .top {
+    width: 85px;
+    height: 85px;
+    transform: rotateX(90deg) translateZ(180px);
+    background: linear-gradient(135deg, #3adcbc 0%, #1abc9c 100%);
+}
+
+/* Building 6 - Medium-Short */
+.building-6 {
+    width: 95px;
+    height: 130px;
+    left: 150px;
+    top: 300px;
+}
+
+.building-6 .front {
+    width: 95px;
+    height: 130px;
+    transform: translateZ(47.5px);
+    background: linear-gradient(to bottom, #34495e 0%, #2c3e50 100%);
+}
+
+.building-6 .back {
+    width: 95px;
+    height: 130px;
+    transform: translateZ(-47.5px) rotateY(180deg);
+    background: linear-gradient(to bottom, #24394e 0%, #1c2e40 100%);
+}
+
+.building-6 .left {
+    width: 95px;
+    height: 130px;
+    transform: rotateY(-90deg) translateZ(47.5px);
+    background: linear-gradient(to bottom, #24394e 0%, #1c2e40 100%);
+}
+
+.building-6 .right {
+    width: 95px;
+    height: 130px;
+    transform: rotateY(90deg) translateZ(47.5px);
+    background: linear-gradient(to bottom, #44596e 0%, #3c4e60 100%);
+}
+
+.building-6 .top {
+    width: 95px;
+    height: 95px;
+    transform: rotateX(90deg) translateZ(130px);
+    background: linear-gradient(135deg, #54697e 0%, #34495e 100%);
+}
+
+/* Add windows to buildings */
+.face::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 15px,
+            rgba(255, 255, 255, 0.1) 15px,
+            rgba(255, 255, 255, 0.1) 18px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 15px,
+            rgba(255, 255, 255, 0.1) 15px,
+            rgba(255, 255, 255, 0.1) 18px
+        );
+}
+
+.controls {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 16px;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.controls h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #4a90e2;
+}
+
+.controls p {
+    font-size: 14px;
+    color: #aaa;
+}
