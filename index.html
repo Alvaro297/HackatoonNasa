@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Ciudad - NASA Hackathon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Mini Ciudad NASA</h1>
+        <div class="city">
+            <!-- Sky and Sun -->
+            <div class="sky">
+                <div class="sun"></div>
+                <div class="cloud cloud1"></div>
+                <div class="cloud cloud2"></div>
+                <div class="cloud cloud3"></div>
+            </div>
+
+            <!-- Town Hall -->
+            <div class="building town-hall" data-name="Town Hall">
+                <div class="building-roof town-hall-roof"></div>
+                <div class="building-body">
+                    <div class="window"></div>
+                    <div class="window"></div>
+                    <div class="window"></div>
+                    <div class="door"></div>
+                </div>
+                <div class="flag"></div>
+            </div>
+
+            <!-- Houses -->
+            <div class="building house house1" data-name="House 1">
+                <div class="building-roof"></div>
+                <div class="building-body">
+                    <div class="window"></div>
+                    <div class="window"></div>
+                    <div class="door"></div>
+                </div>
+                <div class="chimney"></div>
+            </div>
+
+            <div class="building house house2" data-name="House 2">
+                <div class="building-roof"></div>
+                <div class="building-body">
+                    <div class="window"></div>
+                    <div class="window"></div>
+                    <div class="door"></div>
+                </div>
+                <div class="chimney"></div>
+            </div>
+
+            <div class="building house house3" data-name="House 3">
+                <div class="building-roof"></div>
+                <div class="building-body">
+                    <div class="window"></div>
+                    <div class="window"></div>
+                    <div class="door"></div>
+                </div>
+                <div class="chimney"></div>
+            </div>
+
+            <!-- Parks -->
+            <div class="park park1" data-name="Central Park">
+                <div class="grass"></div>
+                <div class="tree">
+                    <div class="tree-crown"></div>
+                    <div class="tree-trunk"></div>
+                </div>
+                <div class="tree tree2">
+                    <div class="tree-crown"></div>
+                    <div class="tree-trunk"></div>
+                </div>
+                <div class="bench"></div>
+            </div>
+
+            <div class="park park2" data-name="Green Park">
+                <div class="grass"></div>
+                <div class="tree">
+                    <div class="tree-crown"></div>
+                    <div class="tree-trunk"></div>
+                </div>
+                <div class="fountain"></div>
+            </div>
+
+            <!-- Roads -->
+            <div class="road road-horizontal"></div>
+            <div class="road road-vertical"></div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <h2>Información de la Ciudad</h2>
+            <p id="info-text">Haz clic en los edificios y parques para más información</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

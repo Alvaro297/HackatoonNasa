@@ -1,0 +1,495 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* City Container */
+.city {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: linear-gradient(to bottom, #87CEEB 0%, #7EC8E3 50%, #90EE90 50%, #76B947 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Sky Elements */
+.sky {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    top: 0;
+}
+
+.sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+    border-radius: 50%;
+    top: 30px;
+    right: 100px;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 100px;
+    opacity: 0.8;
+    animation: float 20s ease-in-out infinite;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 100px;
+}
+
+.cloud1 {
+    width: 100px;
+    height: 40px;
+    top: 80px;
+    left: 10%;
+}
+
+.cloud1::before {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 10px;
+}
+
+.cloud1::after {
+    width: 60px;
+    height: 40px;
+    top: -15px;
+    right: 10px;
+}
+
+.cloud2 {
+    width: 80px;
+    height: 35px;
+    top: 120px;
+    left: 40%;
+    animation-delay: -5s;
+}
+
+.cloud2::before {
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    left: 10px;
+}
+
+.cloud2::after {
+    width: 50px;
+    height: 35px;
+    top: -10px;
+    right: 10px;
+}
+
+.cloud3 {
+    width: 90px;
+    height: 38px;
+    top: 60px;
+    left: 70%;
+    animation-delay: -10s;
+}
+
+.cloud3::before {
+    width: 45px;
+    height: 45px;
+    top: -22px;
+    left: 12px;
+}
+
+.cloud3::after {
+    width: 55px;
+    height: 38px;
+    top: -12px;
+    right: 12px;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(20px) translateY(-10px); }
+}
+
+/* Roads */
+.road {
+    position: absolute;
+    background: #4A4A4A;
+}
+
+.road-horizontal {
+    width: 100%;
+    height: 60px;
+    bottom: 150px;
+    border-top: 3px dashed #FFD700;
+    border-bottom: 3px dashed #FFD700;
+}
+
+.road-vertical {
+    width: 60px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 3px dashed #FFD700;
+    border-right: 3px dashed #FFD700;
+}
+
+/* Buildings Base */
+.building {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    z-index: 10;
+}
+
+.building:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.building-body {
+    background: #E8E8E8;
+    border: 2px solid #333;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+.building-roof {
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 40px solid #8B4513;
+    margin: 0 auto;
+}
+
+/* Town Hall */
+.town-hall {
+    bottom: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.town-hall .building-body {
+    width: 180px;
+    height: 120px;
+    background: #D4AF37;
+}
+
+.town-hall-roof {
+    border-left: 90px solid transparent;
+    border-right: 90px solid transparent;
+    border-bottom: 50px solid #8B0000;
+}
+
+.town-hall .window {
+    width: 25px;
+    height: 35px;
+    background: #4169E1;
+    border: 2px solid #333;
+    margin: 5px;
+}
+
+.town-hall .door {
+    width: 40px;
+    height: 50px;
+    background: #654321;
+    border: 2px solid #333;
+    border-radius: 5px 5px 0 0;
+}
+
+.flag {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    width: 3px;
+    height: 60px;
+    background: #333;
+}
+
+.flag::after {
+    content: '🚩';
+    position: absolute;
+    top: 0;
+    left: 5px;
+    font-size: 20px;
+}
+
+/* Houses */
+.house .building-body {
+    width: 100px;
+    height: 80px;
+    background: #FFB6C1;
+}
+
+.house1 {
+    bottom: 220px;
+    left: 15%;
+}
+
+.house2 {
+    bottom: 220px;
+    right: 15%;
+}
+
+.house3 {
+    bottom: 90px;
+    left: 25%;
+}
+
+.house .window {
+    width: 20px;
+    height: 20px;
+    background: #87CEEB;
+    border: 2px solid #333;
+    margin: 5px;
+}
+
+.house .door {
+    width: 30px;
+    height: 40px;
+    background: #8B4513;
+    border: 2px solid #333;
+    border-radius: 5px 5px 0 0;
+}
+
+.chimney {
+    position: absolute;
+    width: 15px;
+    height: 30px;
+    background: #8B4513;
+    border: 2px solid #333;
+    top: -10px;
+    right: 20px;
+}
+
+.chimney::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #D3D3D3;
+    border-radius: 50%;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: smoke 2s ease-in-out infinite;
+}
+
+@keyframes smoke {
+    0% { 
+        opacity: 0.8;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% { 
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+/* Parks */
+.park {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 5;
+}
+
+.park:hover {
+    transform: scale(1.05);
+}
+
+.grass {
+    background: #32CD32;
+    border: 3px solid #228B22;
+    border-radius: 10px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+}
+
+.park1 {
+    bottom: 90px;
+    right: 20%;
+}
+
+.park1 .grass {
+    width: 120px;
+    height: 80px;
+}
+
+.park2 {
+    bottom: 220px;
+    right: 40%;
+}
+
+.park2 .grass {
+    width: 100px;
+    height: 80px;
+}
+
+/* Trees */
+.tree {
+    position: absolute;
+}
+
+.tree-crown {
+    width: 40px;
+    height: 40px;
+    background: #228B22;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+}
+
+.tree-trunk {
+    width: 10px;
+    height: 20px;
+    background: #8B4513;
+    margin: 0 auto;
+    position: relative;
+    top: -5px;
+}
+
+.park1 .tree {
+    top: 10px;
+    left: 15px;
+}
+
+.park1 .tree2 {
+    top: 10px;
+    right: 15px;
+}
+
+.park2 .tree {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Bench */
+.bench {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 8px;
+    background: #8B4513;
+    border-radius: 2px;
+}
+
+.bench::before,
+.bench::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 12px;
+    background: #8B4513;
+    bottom: -12px;
+}
+
+.bench::before {
+    left: 5px;
+}
+
+.bench::after {
+    right: 5px;
+}
+
+/* Fountain */
+.fountain {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background: #4169E1;
+    border-radius: 50%;
+    border: 3px solid #1E90FF;
+    animation: water 2s ease-in-out infinite;
+}
+
+@keyframes water {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(65, 105, 225, 0.5);
+    }
+    50% { 
+        box-shadow: 0 0 25px rgba(65, 105, 225, 0.8);
+    }
+}
+
+/* Info Panel */
+.info-panel {
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.info-panel h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+#info-text {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .city {
+        height: 400px;
+    }
+    
+    .building,
+    .park {
+        transform: scale(0.7);
+    }
+    
+    .building:hover,
+    .park:hover {
+        transform: scale(0.8);
+    }
+}
