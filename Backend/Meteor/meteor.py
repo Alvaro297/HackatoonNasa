@@ -152,16 +152,21 @@ class MeteorInvented:
 		Devuelve los cálculos para mostrar en frontend.
 		"""
 		return {
-			"name": self.name,
-			"diameter_m": self.diameter_m,
-			"velocity_kms": self.velocity_kms,
-			"impact_angle_deg": self.impact_angle_deg,
-			"latitude": self.latitude,
-			"longitude": self.longitude,
-			"mitigation": self.mitigation,
-			"estimated_energy_megatons": self.calcular_energia()
+			"total_meteors": 1,
+			"hazardous_count": 0,
+			"meteors": [
+				{
+					"name": self.name,
+					"diameter_m": self.diameter_m,
+					"velocity_kms": self.velocity_kms,
+					"impact_angle_deg": self.impact_angle_deg,
+					"latitude": self.latitude,
+					"longitude": self.longitude,
+					"mitigation": self.mitigation,
+					"estimated_energy_megatons": self.calcular_energia()
+				}
+			]
 		}
-
 
 class Meteors:
 	def __init__(self):
