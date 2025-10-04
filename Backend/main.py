@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from datetime import datetime, timedelta
 import requests
-from Backend.Calcs.calcs import *
-from Backend.Meteor.meteor import Meteor, MeteorInvented, Meteors
+from Calcs.calcs import calcsInvented, calcs
+from Meteor.meteor import Meteor, MeteorInvented, Meteors
 
 
 app = Flask(__name__)
@@ -58,4 +58,4 @@ def receive_data():
 	return jsonify(response)
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=5000)
+	app.run(host='0.0.0.0', port=5001)

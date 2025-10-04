@@ -1,5 +1,4 @@
-from Backend.Meteor.meteor import Meteor, MeteorInvented, Meteors
-from Backend.main import main
+from Meteor.meteor import Meteor, MeteorInvented, Meteors
 from flask import jsonify
 
 def allCalcs(meteors):
