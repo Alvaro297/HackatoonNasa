@@ -16,6 +16,7 @@ function main()
 		renderer.render(scene, camera);
 	}
 	
+	render();
 }
 
 window.onload = main;
