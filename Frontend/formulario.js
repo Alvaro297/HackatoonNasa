@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Respuesta del backend:', result);
             
             if (result.success) {
-                document.getElementById('simulation-status').innerHTML = '<strong>Status:</strong> ✅ Simulación procesada correctamente';
+                document.getElementById('simulation-status').innerHTML = '<strong>Status:</strong> ✅ Simulation corrected';
                 
                 // Actualizar la visualización 3D del meteorito
                 if (window.updateMeteorSimulation) {
