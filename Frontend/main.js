@@ -1,4 +1,34 @@
 import * as THREE from 'three';
+
+// --- Formulario: recoger y mostrar datos ---
+document.addEventListener('DOMContentLoaded', () => {
+	const form = document.getElementById('miFormulario');
+	const nombreInput = document.getElementById('nombreInput');
+	const diametroInput = document.getElementById('diametroInput');
+	const categoriaInput = document.getElementById('categoriaInput');
+	const lista = document.getElementById('asteroid-list');
+
+	form.addEventListener('submit', function(event) {
+		event.preventDefault();
+		const nombre = nombreInput.value.trim();
+		const diametro = diametroInput.value.trim();
+		const categoria = categoriaInput.value.trim();
+		if (!nombre && !diametro && !categoria) return;
+
+		// Crear elemento visual
+		const item = document.createElement('div');
+		item.className = 'asteroid-item';
+		item.innerHTML = `<h4>${nombre || 'Sin nombre'}</h4>
+			<p><strong>Diámetro:</strong> ${diametro ? diametro + ' km' : 'N/A'}</p>
+			<p><strong>Categoría:</strong> ${categoria || 'N/A'}</p>`;
+		lista.appendChild(item);
+
+		// Limpiar inputs
+		nombreInput.value = '';
+		diametroInput.value = '';
+		categoriaInput.value = '';
+	});
+});
 let targetRotationX = 0.002;
 let targetRotationY = 0;
 let mouseX = 0, mouseXOnMouseDown = 0, mouseY = 0, mouseYOnMouseDown = 0;
@@ -10,6 +40,10 @@ const slowingFactor = 0.98;
 
 function onDocumentMouseDown( event )
 {
+	// No bloquear eventos si se hace clic en el formulario o sus inputs
+	if (event.target.closest('.info-panel')) {
+		return;
+	}
 	event.preventDefault();
 	document.addEventListener('mousemove', onDocumentMouseMove, false);
 	document.addEventListener('mouseup', onDocumentMouseUp, false);
@@ -107,8 +141,11 @@ function main()
 		};
 	}
 	
+	// Variable global para el meteorito actual
+	let currentMeteorite = null;
+	
 	// Crear meteorito de ejemplo (puedes cambiar los parámetros)
-	const meteorite = createMeteorite(
+	currentMeteorite = createMeteorite(
 		0.05,  // tamaño del meteorito
 		{ x: 3, y: 2, z: 2 },  // posición inicial
 		{ x: 0, y: 0, z: 0 },  // objetivo (centro de la Tierra)
@@ -128,27 +165,27 @@ function main()
 		targetRotationX *= slowingFactor;
 		targetRotationY *= slowingFactor;
 		
-		// Mover meteorito solo si no ha impactado
-		if (!meteorite.hasImpacted) {
-			meteorite.mesh.position.x += meteorite.direction.x * meteorite.speed;
-			meteorite.mesh.position.y += meteorite.direction.y * meteorite.speed;
-			meteorite.mesh.position.z += meteorite.direction.z * meteorite.speed;
+		// Mover meteorito solo si existe y no ha impactado
+		if (currentMeteorite && !currentMeteorite.hasImpacted) {
+			currentMeteorite.mesh.position.x += currentMeteorite.direction.x * currentMeteorite.speed;
+			currentMeteorite.mesh.position.y += currentMeteorite.direction.y * currentMeteorite.speed;
+			currentMeteorite.mesh.position.z += currentMeteorite.direction.z * currentMeteorite.speed;
 			
 			// Rotar meteorito mientras viaja
-			meteorite.mesh.rotation.x += 0.05;
-			meteorite.mesh.rotation.y += 0.03;
+			currentMeteorite.mesh.rotation.x += 0.05;
+			currentMeteorite.mesh.rotation.y += 0.03;
 			
 			// Detectar impacto (distancia al centro de la Tierra)
-			const distanceToEarth = meteorite.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0));
+			const distanceToEarth = currentMeteorite.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0));
 			if (distanceToEarth < 0.5) { // Radio de la Tierra
-				meteorite.hasImpacted = true;
+				currentMeteorite.hasImpacted = true;
 				console.log("¡Impacto detectado! El meteorito ahora rota con la Tierra.");
 				
 				// Convertir posición global a posición local respecto a la Tierra
-				const globalPosition = meteorite.mesh.position.clone();
-				scene.remove(meteorite.mesh); // Remover del scene
-				earthMesh.add(meteorite.mesh); // Añadir como hijo de la Tierra
-				meteorite.mesh.position.copy(earthMesh.worldToLocal(globalPosition)); // Ajustar posición
+				const globalPosition = currentMeteorite.mesh.position.clone();
+				scene.remove(currentMeteorite.mesh); // Remover del scene
+				earthMesh.add(currentMeteorite.mesh); // Añadir como hijo de la Tierra
+				currentMeteorite.mesh.position.copy(earthMesh.worldToLocal(globalPosition)); // Ajustar posición
 			}
 		}
 		
@@ -161,6 +198,51 @@ function main()
 	}
 
 	animate();
+
+	// Función global para actualizar la simulación del meteorito desde el formulario
+	window.updateMeteorSimulation = function(meteorData) {
+		console.log('Actualizando simulación con datos:', meteorData);
+		
+		// Remover meteorito anterior si existe
+		if (currentMeteorite && currentMeteorite.mesh) {
+			if (currentMeteorite.mesh.parent === scene) {
+				scene.remove(currentMeteorite.mesh);
+			} else if (currentMeteorite.mesh.parent === earthMesh) {
+				earthMesh.remove(currentMeteorite.mesh);
+			}
+			console.log('Meteorito anterior eliminado');
+		}
+		
+		// Convertir coordenadas geográficas a posición 3D
+		const lat = meteorData.latitude * Math.PI / 180;  // Convertir a radianes
+		const lon = meteorData.longitude * Math.PI / 180;
+		const radius = 0.5; // Radio de la Tierra
+		
+		// Posición de impacto en la superficie de la Tierra
+		const targetX = radius * Math.cos(lat) * Math.cos(lon);
+		const targetY = radius * Math.sin(lat);
+		const targetZ = radius * Math.cos(lat) * Math.sin(lon);
+		
+		// Calcular posición inicial (más lejos en la dirección opuesta)
+		const distance = 2.0; // Distancia inicial
+		const startX = targetX + (targetX * distance);
+		const startY = targetY + (targetY * distance);
+		const startZ = targetZ + (targetZ * distance);
+		
+		// Crear nuevo meteorito con datos del formulario
+		const size = Math.max(0.01, meteorData.diameter_km * 0.001); // Escalar tamaño
+		const speed = Math.max(0.005, meteorData.velocity_kms * 0.0001); // Escalar velocidad
+		
+		currentMeteorite = createMeteorite(
+			size,
+			new THREE.Vector3(startX, startY, startZ),
+			new THREE.Vector3(targetX, targetY, targetZ),
+			speed
+		);
+		
+		console.log(`Nuevo meteorito creado: Tamaño=${size}, Velocidad=${speed}, Destino=(${targetX.toFixed(2)}, ${targetY.toFixed(2)}, ${targetZ.toFixed(2)})`);
+	};
+
 	document.addEventListener('mousedown', onDocumentMouseDown, false);
 }
 

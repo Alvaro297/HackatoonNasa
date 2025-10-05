@@ -5,15 +5,46 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ThreeJS Earth</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="style.css">
 </head>
+
 <!--
 	Image source:
 		http://www.shadedrelief.com/natural3/index.html
 -->
 <body>
+		<header>
+		<h1>CASIOPEA</h1>
+		<!--<nav>
+			<ul>
+				<li><a href="#home">Home</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#data">Data</a></li>
+			</ul>
+		</nav>
+	-->
+	</header>
+		<div id="asteroid-info" class="info-panel">
+		<h3>CASIOPEA - Data monitor</h3>
+		<div id="asteroid-stats">
+			<form id="miFormulario" autocomplete="off">
+				<input type="number" id="velocityInput" name="velocity" placeholder="Velocity (km/s)" step="0.01">
+				<input type="number" id="diameterInput" name="diameter" placeholder="Diameter (km)" step="0.01">
+				<input type="number" id="angleInput" name="angle" placeholder="Angle (degrees)" step="0.1">
+				<input type="number" id="latitudeInput" name="latitude" placeholder="Latitude" step="0.1" min="-90" max="90">
+				<input type="number" id="longitudeInput" name="longitude" placeholder="Longitude" step="0.1" min="-180" max="180">
+				<button type="submit">Enviar</button>
+			</form>
+		</div>
+		<div id="asteroid-list"></div>
+	</div>
+	
 	<canvas id="globe"></canvas>
 	<script type="module" src="./main.js"></script>
+	<script src="formulario.js"></script>
 	<script src="api.js"></script>
 </body>
 </html>
