@@ -3,9 +3,10 @@ from datetime import datetime, timedelta
 import requests
 from Calcs.calcs import calcsInvented, calcs
 from Meteor.meteor import Meteor, MeteorInvented, Meteors
-
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 def jsonStartDate(data):
 	# Espera fechas en formato 'YYYY-MM-DD'
@@ -39,8 +40,6 @@ def jsonNoData(data):
 	else:
 		return {"error": f"Wrong solicitud {response.status_code}"}
 
-def jsonInvented(data):
-	return calcsInvented(data)
 
 @app.route('/api/data', methods=['POST'])
 def receive_data():
@@ -52,7 +51,7 @@ def receive_data():
 	elif "api_key" in data and len(data) == 1:
 		response = jsonNoData(data)
 	elif "invented" in data:
-		response = jsonInvented(data)
+		return calcsInvented(data)
 	else:
 		return jsonify({"error": "bad request"}), 400
 	return jsonify(response)
