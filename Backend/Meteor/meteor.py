@@ -43,9 +43,9 @@ class Meteor:
 		self.close_approach_data = [CloseApproachData(**cad) for cad in close_approach_data]
 		#Apartir de aqui todo viene de una clase llamada orbital data
 		self.orbit_id = int(orbit_id)
-		self.orbit_determination_date = datetime(orbit_determination_date)
-		self.first_observation_date = datetime(first_observation_date)
-		self.last_observation_date = datetime(last_observation_date)
+		self.orbit_determination_date = datetime.strptime(orbit_determination_date, "%Y-%m-%d %H:%M:%S") if orbit_determination_date else None
+		self.first_observation_date = datetime.strptime(first_observation_date, "%Y-%m-%d") if first_observation_date else None
+		self.last_observation_date = datetime.strptime(last_observation_date, "%Y-%m-%d") if last_observation_date else None
 		#Hasta aqui
 		if (is_sentry_object == "false"):
 			self.is_sentry_object = False
@@ -56,17 +56,19 @@ class Meteor:
 		today = datetime.now()
 		min_diff = None
 		closest = None
+    
 		for approach_data in close_approach_data:
-			# Convierte la fecha del JSON a objeto datetime
-			date_str = approach_data["close_approach_date"]
+        # approach_data es un objeto CloseApproachData, no un diccionario
+        # Accede con punto, no con corchetes
+			date_str = approach_data.close_approach_date
 			approach_date = datetime.strptime(date_str, "%Y-%m-%d")
 			diff = abs((approach_date - today).total_seconds())
+        
 			if min_diff is None or diff < min_diff:
 				min_diff = diff
 				closest = approach_data
-		# Devuelve el dato que quieras, por ejemplo la velocidad:
 		if closest:
-			return float(closest["relative_velocity"]["kilometers_per_second"])
+			return float(closest.relative_velocity.kilometers_per_second)
 		return None
 
 		

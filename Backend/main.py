@@ -19,24 +19,26 @@ def jsonStartDate(data):
 	stringAPI = f"https://api.nasa.gov/neo/rest/v1/feed?start_date={start_date}&end_date={end_date}&api_key={data['api_key']}"
 	response = requests.get(stringAPI)
 	if response.status_code == 200:
-		return calcs(response)
+		return calcs(response.json)
 	else:
 		return {"error": f"Wrong solicitud {response.status_code}"}
 
 def jsonIdData(data):
 	id = str(data["id"])
 	stringAPI = f"https://api.nasa.gov/neo/rest/v1/neo/{id}?api_key={data['api_key']}"
+	print(stringAPI);
 	response = requests.get(stringAPI)
 	if response.status_code == 200:
-		return calcs(response, True)
+		return calcs(response.json(), True)
 	else:
 		return {"error": f"Wrong solicitud {response.status_code}"}
 
 def jsonNoData(data):
 	stringAPI = f"https://api.nasa.gov/neo/rest/v1/neo/browse?api_key={data['api_key']}"
+	print(stringAPI);
 	response = requests.get(stringAPI)
 	if response.status_code == 200:
-		return calcs(response)
+		return calcs(response.json())
 	else:
 		return {"error": f"Wrong solicitud {response.status_code}"}
 
@@ -54,7 +56,7 @@ def receive_data():
 		return calcsInvented(data)
 	else:
 		return jsonify({"error": "bad request"}), 400
-	return jsonify(response)
+	return response
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=5001)

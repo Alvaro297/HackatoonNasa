@@ -23,6 +23,7 @@ def appendMeteors(asteroids, meteors):
 		# Extrae los datos necesarios del meteor_data
 		meters_min = meteor_data["estimated_diameter"]["meters"]["estimated_diameter_min"]
 		meters_max = meteor_data["estimated_diameter"]["meters"]["estimated_diameter_max"]
+		print("Holaaaaa\n")
 		# ...extrae los demás campos necesarios...
 		meteor = Meteor(
 		id=meteor_data["id"],
@@ -43,11 +44,13 @@ def appendMeteors(asteroids, meteors):
 
 def calcs(response, isId = False):
 	meteors = []
-	if not isId:
-		for asteroids in response.get("near_earth_objects", {}).items():
-			appendMeteors(asteroids, meteors)
+	if isId:
+		# response es un objeto único, conviértelo en lista de 1 elemento
+		appendMeteors([response], meteors)
 	else:
-		appendMeteors(response, meteors)
+		# response tiene estructura {"near_earth_objects": {"2025-10-05": [...]}}
+		for date, asteroids in response.get("near_earth_objects", {}).items():
+			appendMeteors(asteroids, meteors)
 	if meteors:
 		return allCalcs(meteors)
 	else:
