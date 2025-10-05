@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             document.getElementById('simulation-status').innerHTML = '<strong>Status:</strong> 🔄 Conectando con servidor...';
             
-            const response = await fetch('http://localhost:5001/api/meteor-simulation', {
+            const response = await fetch('http://localhost:5001/api/data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
