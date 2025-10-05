@@ -84,9 +84,9 @@ function main()
 		// Crear partículas de impacto
 		const particleGeometry = new THREE.SphereGeometry(0.02, 8, 8);
 		const particleMaterial = new THREE.MeshBasicMaterial({
-			color: 0xff4444,
+			map: new THREE.TextureLoader().load('textures/asteroid.webp'),
 			transparent: true,
-			opacity: 0.8
+			opacity: 0.9
 		});
 		
 		// Crear múltiples partículas
@@ -126,8 +126,6 @@ function main()
 		const meteoriteGeometry = new THREE.SphereGeometry(size, 16, 16);
 		const meteoriteMaterial = new THREE.MeshPhongMaterial({
 			map: new THREE.TextureLoader().load('textures/asteroid.webp'),
-			transparent: true,
-			opacity: 0.9
 		});
 		const meteoriteMesh = new THREE.Mesh(meteoriteGeometry, meteoriteMaterial);
 		
