@@ -44,8 +44,8 @@ def appendMeteors(asteroids, meteors):
 def calcs(response, isId = False):
 	meteors = []
 	if not isId:
-		for asteroids in response.get("near_earth_objects", {}).items():
-			appendMeteors(asteroids, meteors)
+		for date, asteroids_list in response.get("near_earth_objects", {}).items():
+			appendMeteors(asteroids_list, meteors)
 	else:
 		appendMeteors(response, meteors)
 	if meteors:

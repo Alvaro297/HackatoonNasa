@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Connection</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .error { background-color: #ffebee; }
+        .success { background-color: #e8f5e8; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Test API Connection - CASIOPEA</h1>
+    
+    <button onclick="testInventedData()">Test Invented Data</button>
+    <button onclick="testNASAData()">Test NASA Data</button>
+    <button onclick="testBrowseData()">Test Browse Data</button>
+    
+    <div id="result"></div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:5001/api/data';
+        const NASA_API_KEY = 'p0ydAYmUZc3uKXRUAz381Ew2uzFbkdAECmOgX1ep';
+
+        function showResult(data, isError = false) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="${isError ? 'error' : 'success'} result">
+                <h3>${isError ? 'Error' : 'Success'}</h3>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            </div>`;
+        }
+
+        async function testInventedData() {
+            try {
+                console.log('Testing invented data...');
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        invented: true,
+                        diameter_m: 100,
+                        velocity_kms: 20,
+                        impact_angle_deg: 45,
+                        name: 'Test Asteroid'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Invented data result:', data);
+                showResult(data);
+            } catch (error) {
+                console.error('Error with invented data:', error);
+                showResult({ error: error.message }, true);
+            }
+        }
+
+        async function testNASAData() {
+            try {
+                console.log('Testing NASA data...');
+                const today = new Date().toISOString().split('T')[0];
+                const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        start_date: weekAgo,
+                        end_date: today,
+                        api_key: NASA_API_KEY
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('NASA data result:', data);
+                showResult(data);
+            } catch (error) {
+                console.error('Error with NASA data:', error);
+                showResult({ error: error.message }, true);
+            }
+        }
+
+        async function testBrowseData() {
+            try {
+                console.log('Testing browse data...');
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        api_key: NASA_API_KEY
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Browse data result:', data);
+                showResult(data);
+            } catch (error) {
+                console.error('Error with browse data:', error);
+                showResult({ error: error.message }, true);
+            }
+        }
+
+        // Test automático al cargar la página
+        window.onload = function() {
+            console.log('Page loaded, testing invented data automatically...');
+            testInventedData();
+        };
+    </script>
+</body>
+</html>
